@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>天气demo</title>
     <link rel="stylesheet" type="text/css" href="demo.css">
     <!--爷的定位api-->
     <script type="text/javascript" src="//api.map.baidu.com/api?v=2.0&ak=tD159REXVkSF9KWnQhF3kYZI6NBuxF0M"></script>
@@ -38,7 +38,7 @@
         <div>根据百度地图定位获取到地理位置信息</div>
         <p>省份：<span id="province"></span></p>
         <p>城市：<span id="city"></span></p>
-        <p>详细地址: <span id="detail"></span></p>
+        <p>详细地址: <span id="detail2"></span></p>
     </div>
 </body>
 <script type="text/javascript">
@@ -67,6 +67,7 @@
                 document.getElementById("province").innerText = province;
                 document.getElementById("city").innerText = city;
                 document.getElementById("detail").innerText = detail;
+                document.getElementById("detail2").innerText = detail;
             }
         });
     }
