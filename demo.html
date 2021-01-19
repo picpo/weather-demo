@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="demo.css">
+    <!--爷的定位api-->
+    <script type="text/javascript" src="//api.map.baidu.com/api?v=2.0&ak=tD159REXVkSF9KWnQhF3kYZI6NBuxF0M"></script>
+    <!-- 新 Bootstrap4 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+    <!-- bootstrap.bundle.min.js 用于弹窗、提示、下拉菜单，包含了 popper.min.js -->
+    <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+    <!-- 最新的 Bootstrap4 核心 JavaScript 文件 -->
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-sm bg-primary navbar-dark ">
+        <ul class="navbar-nav ">
+            <li class="nav-item">
+                <p class="nav-link">当前位置:<span id="detail"></span></p>
+            </li>
+        </ul>
+        <ul class="navbar-nav  ml-auto">
+            <li class="nav-item">
+                <form class="form-inline">
+                    <input class="form-control" type="text" placeholder="搜索县、区、市">
+                    <button class="btn btn-success" type="button">搜索</button>
+                </form>
+            </li>
+        </ul>
+    </nav>
+    <div id="address">
+        <div>根据百度地图定位获取到地理位置信息</div>
+        <p>省份：<span id="province"></span></p>
+        <p>城市：<span id="city"></span></p>
+        <p>详细地址: <span id="detail"></span></p>
+    </div>
+</body>
+<script type="text/javascript">
+    // 百度地图API功能
+    var geolocation = new BMap.Geolocation();
+    geolocation.getCurrentPosition(function(r) {
+        if (this.getStatus() == BMAP_STATUS_SUCCESS) {
+            //console.log(r.point.lng + "__" + r.point.lat); //经纬度
+            getAddress(r.point.lng, r.point.lat);
+        } else {
+            alert('failed' + this.getStatus());
+        }
+    }, {
+        enableHighAccuracy: true
+    })
+
+    function getAddress(lng, lat) {
+        var myGeo = new BMap.Geocoder();
+        myGeo.getLocation(new BMap.Point(lng, lat), function(result) {
+            if (result) {
+                var province = result.addressComponents.province;
+                var city = result.addressComponents.city;
+                var detail = result.address;
+                //console.log(province) //测试
+                //console.log(city)
+                document.getElementById("province").innerText = province;
+                document.getElementById("city").innerText = city;
+                document.getElementById("detail").innerText = detail;
+            }
+        });
+    }
+</script>
+
+</html>
