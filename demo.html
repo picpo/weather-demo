@@ -6,12 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>天气demo</title>
     <link rel="stylesheet" type="text/css" href="demo.css">
+    <!--爷的加密js-->
+    <script type="text/javascript" src="scripts/hmac-sha1.js"></script>
+    <!--爷的jQuery-->
+    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
     <!--爷的定位api-->
     <script type="text/javascript" src="//api.map.baidu.com/api?v=2.0&ak=tD159REXVkSF9KWnQhF3kYZI6NBuxF0M"></script>
     <!-- 新 Bootstrap4 核心 CSS 文件 -->
     <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
-    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
-    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
     <!-- bootstrap.bundle.min.js 用于弹窗、提示、下拉菜单，包含了 popper.min.js -->
     <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
     <!-- 最新的 Bootstrap4 核心 JavaScript 文件 -->
@@ -28,8 +30,12 @@
         <ul class="navbar-nav  ml-auto">
             <li class="nav-item">
                 <form class="form-inline">
-                    <input class="form-control" type="text" placeholder="搜索县、区、市">
-                    <button class="btn btn-success" type="button">搜索</button>
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="请输入所在城市" id="loc">
+                        <div class="input-group-append">
+                            <button class="btn btn-success" type="button" onclick="sear()">搜索</button>
+                        </div>
+                    </div>
                 </form>
             </li>
         </ul>
@@ -40,13 +46,15 @@
         <p>城市：<span id="city"></span></p>
         <p>详细地址: <span id="detail2"></span></p>
     </div>
+    <div id="content">
+    </div>
 </body>
-<script type="text/javascript">
-    // 百度地图API功能
+<script>
+    //百度地图API功能
     var geolocation = new BMap.Geolocation();
     geolocation.getCurrentPosition(function(r) {
         if (this.getStatus() == BMAP_STATUS_SUCCESS) {
-            //console.log(r.point.lng + "__" + r.point.lat); //经纬度
+            //console.log(r.point.lng + "," + r.point.lat); //经纬度
             getAddress(r.point.lng, r.point.lat);
         } else {
             alert('failed' + this.getStatus());
@@ -54,22 +62,86 @@
     }, {
         enableHighAccuracy: true
     })
+    var province;
+    var city;
+    var detail;
+    var LOCATION;
+
+    function sear() {
+        LOCATION = document.getElementById("loc").value;
+        //console.log(province) //测试
+        //console.log(city)
+
+        // document.getElementById("province").innerText = province;
+        // document.getElementById("city").innerText = city;
+        // document.getElementById("detail").innerText = detail;
+        // document.getElementById("detail2").innerText = detail;
+        //加密获得signature的方式直接白嫖官方的demo了......
+        var UID = "PSezKSGBaLlr7-EP6";
+        var KEY = "SJXwPupqny1G_bgzK";
+        var API = "http://api.seniverse.com/v3/weather/now.json";
+        var ts = Math.floor((new Date()).getTime() / 1000);
+        var str = "ts=" + ts + "&uid=" + UID;
+        // 使用 HMAC-SHA1 方式，以 API 密钥（key）对上一步生成的参数字符串（raw）进行加密
+        // 并将加密结果用 base64 编码，并做一个 urlencode，得到签名 sig
+        var sig = CryptoJS.HmacSHA1(str, KEY).toString(CryptoJS.enc.Base64);
+        sig = encodeURIComponent(sig);
+        str = str + "&sig=" + sig;
+        var url = API + "?location=" + LOCATION + "&" + str + "&callback=jsonpCallback";
+        // 向 HTML 中动态插入 script 标签，通过 JSONP 的方式进行调用
+        var newScript = document.createElement('script');
+        newScript.type = 'text/javascript';
+        newScript.src = url;
+        $('body').append(newScript);
+    }
 
     function getAddress(lng, lat) {
         var myGeo = new BMap.Geocoder();
         myGeo.getLocation(new BMap.Point(lng, lat), function(result) {
             if (result) {
-                var province = result.addressComponents.province;
-                var city = result.addressComponents.city;
-                var detail = result.address;
+                province = result.addressComponents.province;
+                city = result.addressComponents.city;
+                detail = result.address;
+                LOCATION = result.addressComponents.city;
                 //console.log(province) //测试
                 //console.log(city)
+
                 document.getElementById("province").innerText = province;
                 document.getElementById("city").innerText = city;
                 document.getElementById("detail").innerText = detail;
                 document.getElementById("detail2").innerText = detail;
+                //加密获得signature的方式直接白嫖官方的demo了......
+                var UID = "PSezKSGBaLlr7-EP6";
+                var KEY = "SJXwPupqny1G_bgzK";
+                var API = "http://api.seniverse.com/v3/weather/now.json";
+                var ts = Math.floor((new Date()).getTime() / 1000);
+                var str = "ts=" + ts + "&uid=" + UID;
+                // 使用 HMAC-SHA1 方式，以 API 密钥（key）对上一步生成的参数字符串（raw）进行加密
+                // 并将加密结果用 base64 编码，并做一个 urlencode，得到签名 sig
+                var sig = CryptoJS.HmacSHA1(str, KEY).toString(CryptoJS.enc.Base64);
+                sig = encodeURIComponent(sig);
+                str = str + "&sig=" + sig;
+                var url = API + "?location=" + LOCATION + "&" + str + "&callback=jsonpCallback";
+                // 向 HTML 中动态插入 script 标签，通过 JSONP 的方式进行调用
+                var newScript = document.createElement('script');
+                newScript.type = 'text/javascript';
+                newScript.src = url;
+                $('body').append(newScript);
             }
         });
+
+    }
+    var jsonpCallback = function(data) {
+        var obj = document.getElementById('content');
+        var weather = data.results[0];
+        console.log(weather.location.path);
+        var text = [];
+        text.push("Location: " + weather.location.path);
+        text.push("Weather: " + weather.now.text);
+        text.push("Temperature: " + weather.now.temperature);
+        text.push("")
+        obj.innerText = text.join("\n");
+
     }
 </script>
 
