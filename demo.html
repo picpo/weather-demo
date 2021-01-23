@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>天气demo</title>
-    <link rel="stylesheet" type="text/css" href="demo.css">
+    <!--爷的ECharts-->
+    <script src="https://cdn.staticfile.org/echarts/4.3.0/echarts.min.js"></script>
     <!--爷的加密js-->
     <script type="text/javascript" src="scripts/hmac-sha1.js"></script>
     <!--爷的jQuery-->
@@ -18,16 +19,26 @@
     <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
     <!-- 最新的 Bootstrap4 核心 JavaScript 文件 -->
     <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="mystyle.css">
 </head>
 
-<body>
+<body style="background-color:  rgb(98, 152, 224);">
     <nav class="navbar navbar-expand-sm bg-primary navbar-dark ">
-        <ul class="navbar-nav ">
+        <ul class="navbar-nav">
             <li class="nav-item">
-                <p class="nav-link">当前位置:<span id="detail"></span></p>
+                <p class="navbar-text text-white">
+                    当前位置:
+                </p>
+            </li>
+            <li class="nav-item">
+                <p class="nav-link text-white">
+                    <span id="myloc">
+
+                    </span>
+                </p>
             </li>
         </ul>
-        <ul class="navbar-nav  ml-auto">
+        <ul class="navbar-nav   ml-auto">
             <li class="nav-item">
                 <form class="form-inline">
                     <div class="input-group mb-3">
@@ -40,109 +51,117 @@
             </li>
         </ul>
     </nav>
-    <div id="address">
-        <div>根据百度地图定位获取到地理位置信息</div>
-        <p>省份：<span id="province"></span></p>
-        <p>城市：<span id="city"></span></p>
-        <p>详细地址: <span id="detail2"></span></p>
+    <div id="main">
+        <ul class="nav nav-tabs nav-justified" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active text-dark" data-toggle="tab" href="#menu1">今日实况</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark" data-toggle="tab" href="#menu2">未来24h</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark" data-toggle="tab" href="#menu3">未来六日</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark" data-toggle="tab" href="#menu4">8~15日</a>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div class="container tab-pane active " id="menu1">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm-3 col-md-6" id="now_left">
+                            <div id="now_city">
+                            </div>
+                            <div id="now_temp">
+                                <h1 class="display-2" id="now_temp_num"></h1>
+                            </div>
+                            <div id="now_weath">
+                                <h2 id="now_weath_text"></h2>
+                                <img src="" id="now_weath_img">
+                            </div>
+                        </div>
+                        <div class="col-sm-9 col-md-6" id="now_right">
+                            <div id="now_update">
+                            </div>
+                            <div id="now_wind">
+                            </div>
+                            <div id="now_feel">
+                            </div>
+                            <div id="now_today">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container tab-pane fade" id="menu2">
+                <div class="row">
+                    <div class="col-sm-3" id="hour_0">
+                    </div>
+                    <div class="col-sm-3" id="hour_1">
+                    </div>
+                    <div class="col-sm-3" id="hour_2">
+                    </div>
+                    <div class="col-sm-3" id="hour_3">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-3" id="hour_4">
+                    </div>
+                    <div class="col-sm-3" id="hour_5">
+                    </div>
+                    <div class="col-sm-3" id="hour_6">
+                    </div>
+                    <div class="col-sm-3" id="hour_7">
+                    </div>
+                </div>
+                <div id="hour_temp" style="width: 90vw;height:400px;"></div>
+            </div>
+            <div class="container tab-pane fade" id="menu3">
+                <div class="row">
+                    <div class="col-sm-4" id="day_1">
+                    </div>
+                    <div class="col-sm-4" id="day_2">
+                    </div>
+                    <div class="col-sm-4" id="day_3">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4" id="day_4">
+                    </div>
+                    <div class="col-sm-4" id="day_5">
+                    </div>
+                    <div class="col-sm-4" id="day_6">
+                    </div>
+                </div>
+                <div id="daily_temp1" style="width: 90vw;height:400px;"></div>
+            </div>
+            <div class="container tab-pane fade" id="menu4">
+                <div class="row">
+                    <div class="col-sm-3" id="day_7">
+                    </div>
+                    <div class="col-sm-3" id="day_8">
+                    </div>
+                    <div class="col-sm-3" id="day_9">
+                    </div>
+                    <div class="col-sm-3" id="day_10">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-3" id="day_11">
+                    </div>
+                    <div class="col-sm-3" id="day_12">
+                    </div>
+                    <div class="col-sm-3" id="day_13">
+                    </div>
+                    <div class="col-sm-3" id="day_14">
+                    </div>
+                </div>
+                <div id="daily_temp2" style="width: 90vw;height:400px;"></div>
+            </div>
+        </div>
     </div>
-    <div id="content">
-    </div>
+    <script type="text/javascript" src="myscript.js"></script>
 </body>
-<script>
-    //百度地图API功能
-    var geolocation = new BMap.Geolocation();
-    geolocation.getCurrentPosition(function(r) {
-        if (this.getStatus() == BMAP_STATUS_SUCCESS) {
-            //console.log(r.point.lng + "," + r.point.lat); //经纬度
-            getAddress(r.point.lng, r.point.lat);
-        } else {
-            alert('failed' + this.getStatus());
-        }
-    }, {
-        enableHighAccuracy: true
-    })
-    var province;
-    var city;
-    var detail;
-    var LOCATION;
-
-    function sear() {
-        LOCATION = document.getElementById("loc").value;
-        //console.log(province) //测试
-        //console.log(city)
-
-        // document.getElementById("province").innerText = province;
-        // document.getElementById("city").innerText = city;
-        // document.getElementById("detail").innerText = detail;
-        // document.getElementById("detail2").innerText = detail;
-        //加密获得signature的方式直接白嫖官方的demo了......
-        var UID = "PSezKSGBaLlr7-EP6";
-        var KEY = "SJXwPupqny1G_bgzK";
-        var API = "http://api.seniverse.com/v3/weather/now.json";
-        var ts = Math.floor((new Date()).getTime() / 1000);
-        var str = "ts=" + ts + "&uid=" + UID;
-        // 使用 HMAC-SHA1 方式，以 API 密钥（key）对上一步生成的参数字符串（raw）进行加密
-        // 并将加密结果用 base64 编码，并做一个 urlencode，得到签名 sig
-        var sig = CryptoJS.HmacSHA1(str, KEY).toString(CryptoJS.enc.Base64);
-        sig = encodeURIComponent(sig);
-        str = str + "&sig=" + sig;
-        var url = API + "?location=" + LOCATION + "&" + str + "&callback=jsonpCallback";
-        // 向 HTML 中动态插入 script 标签，通过 JSONP 的方式进行调用
-        var newScript = document.createElement('script');
-        newScript.type = 'text/javascript';
-        newScript.src = url;
-        $('body').append(newScript);
-    }
-
-    function getAddress(lng, lat) {
-        var myGeo = new BMap.Geocoder();
-        myGeo.getLocation(new BMap.Point(lng, lat), function(result) {
-            if (result) {
-                province = result.addressComponents.province;
-                city = result.addressComponents.city;
-                detail = result.address;
-                LOCATION = result.addressComponents.city;
-                //console.log(province) //测试
-                //console.log(city)
-
-                document.getElementById("province").innerText = province;
-                document.getElementById("city").innerText = city;
-                document.getElementById("detail").innerText = detail;
-                document.getElementById("detail2").innerText = detail;
-                //加密获得signature的方式直接白嫖官方的demo了......
-                var UID = "PSezKSGBaLlr7-EP6";
-                var KEY = "SJXwPupqny1G_bgzK";
-                var API = "http://api.seniverse.com/v3/weather/now.json";
-                var ts = Math.floor((new Date()).getTime() / 1000);
-                var str = "ts=" + ts + "&uid=" + UID;
-                // 使用 HMAC-SHA1 方式，以 API 密钥（key）对上一步生成的参数字符串（raw）进行加密
-                // 并将加密结果用 base64 编码，并做一个 urlencode，得到签名 sig
-                var sig = CryptoJS.HmacSHA1(str, KEY).toString(CryptoJS.enc.Base64);
-                sig = encodeURIComponent(sig);
-                str = str + "&sig=" + sig;
-                var url = API + "?location=" + LOCATION + "&" + str + "&callback=jsonpCallback";
-                // 向 HTML 中动态插入 script 标签，通过 JSONP 的方式进行调用
-                var newScript = document.createElement('script');
-                newScript.type = 'text/javascript';
-                newScript.src = url;
-                $('body').append(newScript);
-            }
-        });
-
-    }
-    var jsonpCallback = function(data) {
-        var obj = document.getElementById('content');
-        var weather = data.results[0];
-        console.log(weather.location.path);
-        var text = [];
-        text.push("Location: " + weather.location.path);
-        text.push("Weather: " + weather.now.text);
-        text.push("Temperature: " + weather.now.temperature);
-        text.push("")
-        obj.innerText = text.join("\n");
-
-    }
-</script>
 
 </html>

@@ -1,0 +1,266 @@
+#main {
+    height: 100%;
+    background-image: linear-gradient(rgb(59, 122, 215), rgb(98, 152, 224));
+}
+
+#now_left {
+    border-radius: 25px;
+    border: 2px solid white;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    background-color: rgb(255, 255, 255, 0.3);
+    height: 280px;
+}
+
+#now_right {
+    height: 280px;
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+
+#now_city {
+    margin: 0 auto;
+    margin-top: 15px;
+    /* background-color: blue; */
+    text-align: center;
+    color: white;
+}
+
+#now_temp {
+    margin: 0 auto;
+    /* background-color: blue; */
+    text-align: center;
+    color: white;
+}
+
+#now_weath {
+    margin: 0 auto;
+    /* background-color: blue; */
+    text-align: center;
+    color: white;
+}
+
+#now_update {
+    margin: 0 auto;
+    margin-top: 15px;
+    text-align: center;
+    color: white;
+}
+
+#now_wind {
+    margin: 0 auto;
+    text-align: center;
+    color: white;
+}
+
+#now_feel {
+    margin: 0 auto;
+    margin: 5px;
+    text-align: center;
+    color: white;
+}
+
+#now_today {
+    margin: 0 auto;
+    margin: 5px;
+    text-align: center;
+    color: white;
+}
+
+#hour_0 {
+    border-radius: 10px;
+    border: 2px solid white;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    text-align: center;
+    background-color: rgb(255, 255, 255, 0.3);
+}
+
+#hour_1 {
+    border-radius: 10px;
+    border: 2px solid white;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    text-align: center;
+    background-color: rgb(255, 255, 255, 0.3);
+}
+
+#hour_2 {
+    border-radius: 10px;
+    border: 2px solid white;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    text-align: center;
+    background-color: rgb(255, 255, 255, 0.3);
+}
+
+#hour_3 {
+    border-radius: 10px;
+    border: 2px solid white;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    text-align: center;
+    background-color: rgb(255, 255, 255, 0.3);
+}
+
+#hour_4 {
+    border-radius: 10px;
+    border: 2px solid white;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    text-align: center;
+    background-color: rgb(255, 255, 255, 0.3);
+}
+
+#hour_5 {
+    border-radius: 10px;
+    border: 2px solid white;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    text-align: center;
+    background-color: rgb(255, 255, 255, 0.3);
+}
+
+#hour_6 {
+    border-radius: 10px;
+    border: 2px solid white;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    text-align: center;
+    background-color: rgb(255, 255, 255, 0.3);
+}
+
+#hour_7 {
+    border-radius: 10px;
+    border: 2px solid white;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    text-align: center;
+    background-color: rgb(255, 255, 255, 0.3);
+}
+
+#day_1 {
+    border-radius: 10px;
+    border: 2px solid white;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    text-align: center;
+    background-color: rgb(255, 255, 255, 0.3);
+}
+
+#day_2 {
+    border-radius: 10px;
+    border: 2px solid white;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    text-align: center;
+    background-color: rgb(255, 255, 255, 0.3);
+}
+
+#day_3 {
+    border-radius: 10px;
+    border: 2px solid white;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    text-align: center;
+    background-color: rgb(255, 255, 255, 0.3);
+}
+
+#day_4 {
+    border-radius: 10px;
+    border: 2px solid white;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    text-align: center;
+    background-color: rgb(255, 255, 255, 0.3);
+}
+
+#day_5 {
+    border-radius: 10px;
+    border: 2px solid white;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    text-align: center;
+    background-color: rgb(255, 255, 255, 0.3);
+}
+
+#day_6 {
+    border-radius: 10px;
+    border: 2px solid white;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    text-align: center;
+    background-color: rgb(255, 255, 255, 0.3);
+}
+
+#day_7 {
+    border-radius: 10px;
+    border: 2px solid white;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    text-align: center;
+    background-color: rgb(255, 255, 255, 0.3);
+}
+
+#day_8 {
+    border-radius: 10px;
+    border: 2px solid white;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    text-align: center;
+    background-color: rgb(255, 255, 255, 0.3);
+}
+
+#day_9 {
+    border-radius: 10px;
+    border: 2px solid white;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    text-align: center;
+    background-color: rgb(255, 255, 255, 0.3);
+}
+
+#day_10 {
+    border-radius: 10px;
+    border: 2px solid white;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    text-align: center;
+    background-color: rgb(255, 255, 255, 0.3);
+}
+
+#day_11 {
+    border-radius: 10px;
+    border: 2px solid white;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    text-align: center;
+    background-color: rgb(255, 255, 255, 0.3);
+}
+
+#day_12 {
+    border-radius: 10px;
+    border: 2px solid white;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    text-align: center;
+    background-color: rgb(255, 255, 255, 0.3);
+}
+
+#day_13 {
+    border-radius: 10px;
+    border: 2px solid white;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    text-align: center;
+    background-color: rgb(255, 255, 255, 0.3);
+}
+
+#day_14 {
+    border-radius: 10px;
+    border: 2px solid white;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    text-align: center;
+    background-color: rgb(255, 255, 255, 0.3);
+}

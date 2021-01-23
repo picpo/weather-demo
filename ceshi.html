@@ -1,54 +1,226 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Seniverse API Jsonp Test Page</title>
-    <script type="text/javascript" src="scripts/jquery.js"></script>
-    <script type="text/javascript" src="scripts/hmac-sha1.js"></script>
+    <meta charset="utf-8">
+    <title>ECharts 实例</title>
+    <script src="https://cdn.staticfile.org/jquery/2.2.4/jquery.min.js"></script>
+    <!-- 引入 echarts.js -->
+    <script src="https://cdn.staticfile.org/echarts/4.3.0/echarts.min.js"></script>
 </head>
 
 <body>
-    <div id="content">
-    </div>
-    <script>
-        var UID = "PSezKSGBaLlr7-EP6"; // 测试用 用户ID，请更换成您自己的用户ID
-        var KEY = "SJXwPupqny1G_bgzK"; // 测试用key，请更换成您自己的 Key
-        var API = "http://api.seniverse.com/v3/weather/now.json"; // 获取天气实况
-        var LOCATION = "上海市"; // 除拼音外，还可以使用 v3 id、汉语等形式
+    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+    <div id="main" style="width: 600px;height:400px;"></div>
+    <script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main'));
 
-        // 获取当前时间戳
-        var ts = Math.floor((new Date()).getTime() / 1000);
-        // 构造验证参数字符串
-        var str = "ts=" + ts + "&uid=" + UID;
+        $.when(
+            $.getScript('https://www.runoob.com/static/js/timelineGDP.js'),
+            $.getScript('https://www.runoob.com/static/js/draggable.js')
+        ).done(function() {
 
-        // 使用 HMAC-SHA1 方式，以 API 密钥（key）对上一步生成的参数字符串（raw）进行加密
-        // 并将加密结果用 base64 编码，并做一个 urlencode，得到签名 sig
-        var sig = CryptoJS.HmacSHA1(str, KEY).toString(CryptoJS.enc.Base64);
-        sig = encodeURIComponent(sig);
-        str = str + "&sig=" + sig;
+            draggable.init(
+                $('div[_echarts_instance_]')[0],
+                myChart, {
+                    width: 700,
+                    height: 400,
+                    throttle: 70
+                }
+            );
 
-        var jsonpCallback = function(data) {
-            var obj = document.getElementById('content');
-            var weather = data.results[0];
+            myChart.hideLoading();
 
-            var text = [];
-            text.push("Location: " + weather.location.path);
-            text.push("Weather: " + weather.now.text);
-            text.push("Temperature: " + weather.now.temperature);
 
-            obj.innerText = text.join("\n");
-        }
 
-        // 构造最终请求的 url
-        var url = API + "?location=" + LOCATION + "&" + str + "&callback=jsonpCallback";
+            option = {
+                baseOption: {
+                    title: {
+                        text: '南丁格尔玫瑰图',
+                        subtext: '纯属虚构',
+                        x: 'center'
+                    },
+                    tooltip: {
+                        trigger: 'item',
+                        formatter: "{a} <br/>{b} : {c} ({d}%)"
+                    },
+                    legend: {
+                        data: ['rose1', 'rose2', 'rose3', 'rose4', 'rose5', 'rose6', 'rose7', 'rose8']
+                    },
+                    toolbox: {
+                        show: true,
+                        feature: {
+                            mark: {
+                                show: true
+                            },
+                            dataView: {
+                                show: true,
+                                readOnly: false
+                            },
+                            magicType: {
+                                show: true,
+                                type: ['pie', 'funnel']
+                            },
+                            restore: {
+                                show: true
+                            },
+                            saveAsImage: {
+                                show: true
+                            }
+                        }
+                    },
+                    calculable: true,
+                    series: [{
+                        name: '半径模式',
+                        type: 'pie',
+                        roseType: 'radius',
+                        label: {
+                            normal: {
+                                show: false
+                            },
+                            emphasis: {
+                                show: true
+                            }
+                        },
+                        lableLine: {
+                            normal: {
+                                show: false
+                            },
+                            emphasis: {
+                                show: true
+                            }
+                        },
+                        data: [{
+                            value: 10,
+                            name: 'rose1'
+                        }, {
+                            value: 5,
+                            name: 'rose2'
+                        }, {
+                            value: 15,
+                            name: 'rose3'
+                        }, {
+                            value: 25,
+                            name: 'rose4'
+                        }, {
+                            value: 20,
+                            name: 'rose5'
+                        }, {
+                            value: 35,
+                            name: 'rose6'
+                        }, {
+                            value: 30,
+                            name: 'rose7'
+                        }, {
+                            value: 40,
+                            name: 'rose8'
+                        }]
+                    }, {
+                        name: '面积模式',
+                        type: 'pie',
+                        roseType: 'area',
+                        data: [{
+                            value: 10,
+                            name: 'rose1'
+                        }, {
+                            value: 5,
+                            name: 'rose2'
+                        }, {
+                            value: 15,
+                            name: 'rose3'
+                        }, {
+                            value: 25,
+                            name: 'rose4'
+                        }, {
+                            value: 20,
+                            name: 'rose5'
+                        }, {
+                            value: 35,
+                            name: 'rose6'
+                        }, {
+                            value: 30,
+                            name: 'rose7'
+                        }, {
+                            value: 40,
+                            name: 'rose8'
+                        }]
+                    }]
+                },
+                media: [{
+                    option: {
+                        legend: {
+                            right: 'center',
+                            bottom: 0,
+                            orient: 'horizontal'
+                        },
+                        series: [{
+                            radius: [20, '50%'],
+                            center: ['25%', '50%']
+                        }, {
+                            radius: [30, '50%'],
+                            center: ['75%', '50%']
+                        }]
+                    }
+                }, {
+                    query: {
+                        minAspectRatio: 1
+                    },
+                    option: {
+                        legend: {
+                            right: 'center',
+                            bottom: 0,
+                            orient: 'horizontal'
+                        },
+                        series: [{
+                            radius: [20, '50%'],
+                            center: ['25%', '50%']
+                        }, {
+                            radius: [30, '50%'],
+                            center: ['75%', '50%']
+                        }]
+                    }
+                }, {
+                    query: {
+                        maxAspectRatio: 1
+                    },
+                    option: {
+                        legend: {
+                            right: 'center',
+                            bottom: 0,
+                            orient: 'horizontal'
+                        },
+                        series: [{
+                            radius: [20, '50%'],
+                            center: ['50%', '30%']
+                        }, {
+                            radius: [30, '50%'],
+                            center: ['50%', '70%']
+                        }]
+                    }
+                }, {
+                    query: {
+                        maxWidth: 500
+                    },
+                    option: {
+                        legend: {
+                            right: 10,
+                            top: '15%',
+                            orient: 'vertical'
+                        },
+                        series: [{
+                            radius: [20, '50%'],
+                            center: ['50%', '30%']
+                        }, {
+                            radius: [30, '50%'],
+                            center: ['50%', '75%']
+                        }]
+                    }
+                }]
+            };
+            myChart.setOption(option);
 
-        // 向 HTML 中动态插入 script 标签，通过 JSONP 的方式进行调用
-        var newScript = document.createElement('script');
-        newScript.type = 'text/javascript';
-        newScript.src = url;
-        $('body').append(newScript);
+        });
     </script>
 </body>
 
